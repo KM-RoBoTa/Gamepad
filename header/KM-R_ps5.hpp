@@ -15,6 +15,8 @@
 #ifndef KMR_PS5_HPP
 #define KMR_PS5_HPP
 
+#include <iostream>
+#include <mutex>
 #include "libevdev.h"
 
 /**
@@ -47,6 +49,7 @@ class PS5 {
     public:
         int m_buttons[NBR_BUTTONS];
         float m_axes[NBR_AXES];
+        std::mutex m_mutex;
 
         void init(const char* gamepad_portname);
         void gamepadLoop();

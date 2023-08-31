@@ -101,6 +101,9 @@ void PS5::updateGamepad(input_event ev)
     // The value gets remapped from [0, 255] to [-1, 1] for axes
     float rescaled_value = 2/(float)MAX_AXIS_VAL * value -1;
 
+    // Lock the mutex
+    scoped_lock lock(m_mutex);
+
     // A button's state has changed
     if (strcmp(event_type, "EV_KEY") == 0){
         if      (strcmp(event_code, "BTN_SELECT") == 0) m_buttons[e_BTN_SELECT] = value;
