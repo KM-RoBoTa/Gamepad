@@ -17,7 +17,7 @@
 
 #include <iostream>
 #include <mutex>
-#include "libevdev.h"
+#include "libevdev-1.0/libevdev/libevdev.h"
 
 /**
  * @brief       Enumerate of all buttons present in a PS5
