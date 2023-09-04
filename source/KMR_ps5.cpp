@@ -30,6 +30,8 @@ using namespace std;
 
 #define MAX_AXIS_VAL 255
 
+namespace KMR::gamepads
+{
 
 /**
  * @brief       Initialize a PS5 object: to call after its constructor
@@ -132,4 +134,6 @@ void PS5::updateGamepad(input_event ev)
         else if(strcmp(event_code, "ABS_HAT0X") == 0) m_buttons[e_ABS_HAT0X] = value;
         else if(strcmp(event_code, "ABS_HAT0Y") == 0) m_buttons[e_ABS_HAT0Y] = -value;
     }
+}
+
 }

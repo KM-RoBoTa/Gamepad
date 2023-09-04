@@ -19,6 +19,10 @@
 #include <mutex>
 #include "libevdev-1.0/libevdev/libevdev.h"
 
+
+namespace KMR::gamepads
+{
+
 /**
  * @brief       Enumerate of all buttons present in a PS5
  * @details     The names follow the naming set by the evdev library:
@@ -55,5 +59,6 @@ class PS5 {
         void gamepadLoop();
 };
 
+}
 
 #endif
