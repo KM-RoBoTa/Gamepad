@@ -7,7 +7,7 @@ Dependencies:
 
 How to use: go to the KMR_gamepads folder, then:
 ```bash
-mdkir build
+mkdir build
 cd build
 cmake ../
 cmake --build .
