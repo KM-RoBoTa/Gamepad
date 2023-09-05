@@ -22,6 +22,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <vector>
+#include <thread> 
+
 
 #include "KMR_ps5.hpp"
 
@@ -45,7 +47,9 @@ PS5::PS5()
     for (int i=0; i<NBR_AXES; i++)
         m_axes[i] = 0; 
 
-    cout << "PS5 object created" << endl;
+    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, "/dev/input/event19");
+
+    cout << "Success: PS5 object created!" << endl;
 }
 
 
@@ -140,5 +144,14 @@ void PS5::updateGamepad(input_event ev)
         else if(strcmp(event_code, "ABS_HAT0Y") == 0) m_buttons[e_ABS_HAT0Y] = -value;
     }
 }
+
+/**
+ * @brief       Safely stops the gamepad's thread. To call at the end of the program
+ */
+void PS5::stop()
+{
+    m_ps5_thread.join();
+}
+
 
 }
