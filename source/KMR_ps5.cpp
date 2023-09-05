@@ -2,7 +2,7 @@
  ****************************************************************************
  * KM-Robota's ps5.cpp module
  ****************************************************************************
- * @file        KM-R_ps5.cpp
+ * @file        KMR_ps5.cpp
  * @brief       ps5
  ****************************************************************************
  * @copyright
@@ -19,9 +19,8 @@
 // https://gitlab.freedesktop.org/libevdev/libevdev/-/blob/master/include/linux/linux/input-event-codes.h
 
 #include <iostream>
-#include <fcntl.h>
-#include <string.h>
-#include <vector>
+#include <fcntl.h>   // Control over the open file referenced by file descriptor 
+#include <string.h> 
 #include <thread> 
 
 

@@ -2,7 +2,7 @@
  * KM-Robota library
  ******************************************************************************
  * @file            KMR_ps5.hpp
- * @brief           Header for the lib_robot.cpp file.
+ * @brief           Header for the KMR_ps5.cpp file.
  ******************************************************************************
  * @copyright
  * Copyright 2021-2023 Laura Paez Coy and Kamilo Melo                    \n
