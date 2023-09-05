@@ -50,6 +50,7 @@ class PS5 {
         std::thread m_ps5_thread;
 
         void updateGamepad(input_event ev);
+        void gamepadLoop(const char* gamepad_portname);
 
     public:
         int m_buttons[NBR_BUTTONS];
@@ -57,7 +58,6 @@ class PS5 {
         std::mutex m_mutex;
 
         PS5();
-        void gamepadLoop(const char* gamepad_portname);
         void stop();
 };
 
