@@ -18,6 +18,7 @@
 #include <iostream>
 #include <mutex>
 #include "libevdev-1.0/libevdev/libevdev.h"
+#include <thread>
 
 
 namespace KMR::gamepads

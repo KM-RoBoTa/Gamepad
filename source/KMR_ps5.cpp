@@ -21,7 +21,6 @@
 #include <iostream>
 #include <fcntl.h>   // Control over the open file referenced by file descriptor 
 #include <string.h> 
-#include <thread> 
 
 #include "KMR_ps5.hpp"
 
@@ -36,6 +35,8 @@ namespace KMR::gamepads
 /**
  * @brief       Create and initialize a PS5 object
  * @retval      void
+ * @note        By default, open Sony Dualsense gamepad. If you wish to use a different
+ *              gamepad, use the overload of this constructor
  */
 PS5::PS5()
 {
@@ -51,6 +52,11 @@ PS5::PS5()
     cout << "Success: PS5 object created!" << endl;
 }
 
+/**
+ * @brief       Create and initialize a PS5 object with a different gamepad than the default
+ * @retval      void
+ * @overload
+ */
 PS5::PS5(const char* gamepad_portname)
 {
     // Initialize tables
