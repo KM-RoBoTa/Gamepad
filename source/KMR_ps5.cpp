@@ -45,7 +45,21 @@ PS5::PS5()
     for (int i=0; i<NBR_AXES; i++)
         m_axes[i] = 0; 
 
-    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, "/dev/input/ps5");
+    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this,
+    "/dev/input/by-id/usb-Sony_Interactive_Entertainment_Wireless_Controller-if03-event-joystick");
+
+    cout << "Success: PS5 object created!" << endl;
+}
+
+PS5::PS5(const char* gamepad_portname)
+{
+    // Initialize tables
+    for (int i=0; i<NBR_BUTTONS; i++)
+        m_buttons[i] = 0;
+    for (int i=0; i<NBR_AXES; i++)
+        m_axes[i] = 0; 
+
+    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, gamepad_portname);
 
     cout << "Success: PS5 object created!" << endl;
 }

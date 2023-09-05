@@ -58,6 +58,7 @@ class PS5 {
         std::mutex m_mutex;
 
         PS5();
+        PS5(const char* gamepad_portname);
         void stop();
 };
 
