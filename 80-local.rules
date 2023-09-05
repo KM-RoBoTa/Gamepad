@@ -1,0 +1,2 @@
+SUBSYSTEM=="input", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0ce6", ENV{DEVNAME}=="*event*", ACTION=="add", SYMLINK+="input/ps5"
+

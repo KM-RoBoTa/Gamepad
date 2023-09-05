@@ -23,7 +23,6 @@
 #include <string.h> 
 #include <thread> 
 
-
 #include "KMR_ps5.hpp"
 
 
@@ -46,7 +45,7 @@ PS5::PS5()
     for (int i=0; i<NBR_AXES; i++)
         m_axes[i] = 0; 
 
-    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, "/dev/input/event19");
+    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, "/dev/input/ps5");
 
     cout << "Success: PS5 object created!" << endl;
 }
