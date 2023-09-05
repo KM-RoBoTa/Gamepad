@@ -34,15 +34,32 @@ namespace KMR::gamepads
 {
 
 /**
- * @brief       Initialize a PS5 object: to call after its constructor
+ * @brief       Create and initialize a PS5 object
+ * @retval      void
+ */
+PS5::PS5()
+{
+    // Initialize tables
+    for (int i=0; i<NBR_BUTTONS; i++)
+        m_buttons[i] = 0;
+    for (int i=0; i<NBR_AXES; i++)
+        m_axes[i] = 0; 
+
+    cout << "PS5 object created" << endl;
+}
+
+
+/**
+ * @brief       Read and save the current gamepad values. To loop in a thread
  * @param[in]   gamepad_portname Port handling the gamepad, in the form of /dev/input/eventX
  * @retval      void
  */
-void PS5::init(const char* gamepad_portname)
+void PS5::gamepadLoop(const char* gamepad_portname)
 {
     struct libevdev *dev = NULL;
-    int fd;
+    int fd = 1;
     int rc = 1;
+    int read_flag = LIBEVDEV_READ_FLAG_NORMAL;
 
     fd = open(gamepad_portname, O_RDONLY|O_NONBLOCK);
     m_fd = fd;
@@ -57,21 +74,9 @@ void PS5::init(const char* gamepad_portname)
         libevdev_get_id_bustype(dev),
         libevdev_get_id_vendor(dev),
         libevdev_get_id_product(dev));
-}
 
 
-/**
- * @brief       Read and save the current gamepad values. To loop in a thread
- * @retval      void
- */
-void PS5::gamepadLoop()
-{
-    struct libevdev *dev = NULL;
-    int rc = 1;
-    int read_flag = LIBEVDEV_READ_FLAG_NORMAL;
-
-
-    // Map buttons and axes
+    // Start of loop
     do {
         struct input_event ev;
         rc = libevdev_next_event(dev, read_flag, &ev);

@@ -55,8 +55,8 @@ class PS5 {
         float m_axes[NBR_AXES];
         std::mutex m_mutex;
 
-        void init(const char* gamepad_portname);
-        void gamepadLoop();
+        PS5();
+        void gamepadLoop(const char* gamepad_portname);
 };
 
 }
