@@ -16,3 +16,10 @@ target_include_directories(KMR_ps5 PUBLIC include)
 
 # Link the used libraries: libevdev
 target_link_libraries(KMR_ps5 evdev)
+
+
+# Generate Docs
+option(BUILD_DOCS "Generate Docs" ON)
+if(BUILD_DOCS)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/docs)  # path to docs' cmakelists
+endif()
