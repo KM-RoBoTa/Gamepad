@@ -13,5 +13,6 @@ cmake ../
 cmake --build .
 ```
 
-If you have Doxygen and Graphviz installed, you can regenerate the documentation locally with `make docs` from the `build`` folder after the cmake. \n
+If you have Doxygen and Graphviz installed, you can regenerate the documentation locally with
+```make docs``` from the `build` folder after the cmake.
 The generated documentation can be found in docs/generated_docs/html.
