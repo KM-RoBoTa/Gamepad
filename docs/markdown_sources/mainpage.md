@@ -22,29 +22,6 @@ This library is written in C++.
 
 ## Use rights, credentials...?
 
-### Between pages in the documentation
-- This is how you directly reference a page in the documentation: [readme](README.md)
-- [mysubpage](tuto/subpage.md) - this is here for example purposes
 
-## Pictures
-![This is a nice duck](mainpage/duck.jpg)
-The path to the image is very awkward for some reason. It would seem that the path to the image is relative to the output path of the HTML.
-
-## Fancy table
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-
-
-## Code example
-```cpp
-#include <iostream>
-
-int main() {
-    std::cout << "Hello World!";
-    return 0;
-}
-```
-
-
+## Not yet implemented
+Currently only works by cable, not by bluetooth yet.

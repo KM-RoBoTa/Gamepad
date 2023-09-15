@@ -5,7 +5,7 @@
 This library is dependent on the following libraries that need to be installed first:
 - libevdev: https://gitlab.freedesktop.org/libevdev/libevdev 
 - CMake
-- (Doxygen if you wish to regenerate the documentation locally)
+- (Doxygen and Graphviz if you wish to regenerate the documentation locally)
 
 ## Installation
 This library does not need to be installed per se. It has to be built into a static library (.a) in a "build" folder: 

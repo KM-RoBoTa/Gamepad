@@ -1,4 +1,5 @@
- # How to use {#how-to-use}
+\page how-to-use How to use
+[TOC]
 
 The library lives in the KMR::gamepads namespace. 
 
@@ -9,7 +10,7 @@ The library is thus very straightforward to use, without any kind of additional 
 The user needs to implement, in the main thread, a reading function that fetches the gamepad values they're interested in, and must take care to lock the object's attribute mutex during that reading. 
 
 
-## Example
+# Example  {#example-code}
 This is a very simple example where the user-defined getGamepadData function fetches the gamepad status every second:
 ```cpp
 #include <iostream>
@@ -54,7 +55,7 @@ void getGamepadData(KMR::gamepads::PS5& ps)
 }
 ```
 
-## Specific gamepads
+# Specific gamepads {#specific-gamepads}
 
 For names and values mapping of specific gamepads, check the list below:
-- [PS5](#ps5)
+- \subpage ps5 
