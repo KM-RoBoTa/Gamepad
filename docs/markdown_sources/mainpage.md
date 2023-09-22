@@ -20,8 +20,18 @@ This library is written in C++.
 - How to [setup](#setup)
 - How to [use](#how-to-use)
 
-## Use rights, credentials...?
+
+## About
+
+KM-RoBoTa sarl's KMR_gamepads library to easily fetch a gamepad's input.
+
+### Authors
+Library written by Katarina Lichardova: katarina.lichardova@km-robota.com
+
+### Copyright
+Copyright 2021-2023, Laura Paez Coy and Kamilo Melo. \n
+This code is under MIT licence: https://opensource.org/licenses/MIT
 
 
 ## Not yet implemented
-Currently only works by cable, not by bluetooth yet.
+The library was tested by connecting the gamepad through cable. It was not yet tested via bluetooth.
