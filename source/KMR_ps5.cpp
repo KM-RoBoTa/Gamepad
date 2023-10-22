@@ -112,6 +112,8 @@ void PS5::gamepadLoop(const char* gamepad_portname)
             updateGamepad(ev);
         }
 
+        this_thread::sleep_for(chrono::milliseconds(1));
+
     } while (1); 
 }
 
