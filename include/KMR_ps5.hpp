@@ -49,6 +49,7 @@ enum ps5Axes{e_ABS_RX, e_ABS_RY, e_ABS_X, e_ABS_Y,
 class PS5 {
     private:
         int m_fd; // File descriptor
+        bool m_stopThread;
         std::thread m_ps5_thread;
 
         void updateGamepad(input_event ev);
@@ -61,7 +62,7 @@ class PS5 {
 
         PS5();
         PS5(const char* gamepad_portname);
-        void stop();
+        ~PS5();
 };
 
 }

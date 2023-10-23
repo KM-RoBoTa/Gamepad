@@ -41,6 +41,8 @@ namespace KMR::gamepads
  */
 PS5::PS5()
 {
+    m_stopThread = false;
+
     // Initialize tables
     for (int i=0; i<NBR_BUTTONS; i++)
         m_buttons[i] = 0;
@@ -52,6 +54,7 @@ PS5::PS5()
 
     cout << "Success: PS5 object created!" << endl;
 }
+
 
 /**
  * @brief       Create and initialize a PS5 object with a different gamepad than the default
@@ -69,6 +72,18 @@ PS5::PS5(const char* gamepad_portname)
     m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, gamepad_portname);
 
     cout << "Success: PS5 object created!" << endl;
+}
+
+
+/**
+ * @brief       Class destructor. Takes care of safely stopping the thread
+ */
+PS5::~PS5()
+{
+    m_stopThread = true;
+
+    if (m_ps5_thread.joinable()) 
+        m_ps5_thread.join();
 }
 
 
@@ -100,7 +115,7 @@ void PS5::gamepadLoop(const char* gamepad_portname)
 
 
     // Start of loop
-    do {
+    while(!m_stopThread) {
         struct input_event ev;
         rc = libevdev_next_event(dev, read_flag, &ev);
         if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
@@ -114,7 +129,7 @@ void PS5::gamepadLoop(const char* gamepad_portname)
 
         this_thread::sleep_for(chrono::milliseconds(1));
 
-    } while (1); 
+    }
 }
 
 /**
@@ -165,14 +180,5 @@ void PS5::updateGamepad(input_event ev)
         else if(strcmp(event_code, "ABS_HAT0Y") == 0) m_buttons[e_ABS_HAT0Y] = -value;
     }
 }
-
-/**
- * @brief       Safely stops the gamepad's thread. To call at the end of the program
- */
-void PS5::stop()
-{
-    m_ps5_thread.join();
-}
-
 
 }
