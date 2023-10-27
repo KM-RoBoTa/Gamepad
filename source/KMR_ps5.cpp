@@ -82,6 +82,8 @@ PS5::~PS5()
 {
     m_stopThread = true;
 
+    cout << "Safely stopping the gamepad's thread.... " << endl;
+
     if (m_ps5_thread.joinable()) 
         m_ps5_thread.join();
 }
