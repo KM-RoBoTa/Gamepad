@@ -36,8 +36,8 @@ namespace KMR::gamepads
 /**
  * @brief       Create and initialize a PS5 object
  * @retval      void
- * @note        By default, open Sony Dualsense gamepad. If you wish to use a different
- *              gamepad, use the overload of this constructor
+ * @note        By default, open Sony Dualsense gamepad's custom event name set by udev rules created
+ *              by the scripts. If you wish to use a different gamepad, use the overload of this cstr
  */
 PS5::PS5()
 {
@@ -49,8 +49,7 @@ PS5::PS5()
     for (int i=0; i<NBR_AXES; i++)
         m_axes[i] = 0; 
 
-    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this,
-    "/dev/input/by-id/usb-Sony_Interactive_Entertainment_Wireless_Controller-if03-event-joystick");
+    m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, "/dev/input/event-ps5-gamepad");
 
     cout << "Success: PS5 object created!" << endl;
 }
@@ -58,11 +57,13 @@ PS5::PS5()
 
 /**
  * @brief       Create and initialize a PS5 object with a different gamepad than the default
+ * @param[in]   gamepad_portname Port handling the gamepad, in the form of "/dev/input/eventX"
  * @retval      void
- * @overload
  */
 PS5::PS5(const char* gamepad_portname)
 {
+    m_stopThread = false;
+
     // Initialize tables
     for (int i=0; i<NBR_BUTTONS; i++)
         m_buttons[i] = 0;
