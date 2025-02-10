@@ -8,6 +8,7 @@ sudo bash -c 'cat > /etc/udev/rules.d/ps5-input-events.rules' << EOF
 KERNEL=="event*" , SUBSYSTEM=="input", MODE="0666"
 KERNEL=="event*", ATTRS{name}=="DualSense Wireless Controller", SYMLINK+="input/event-ps5-gamepad"
 KERNEL=="event*", ATTRS{name}=="Sony Interactive Entertainment DualSense Wireless Controller", SYMLINK+="input/event-ps5-gamepad"
+KERNEL=="event*", ATTRS{name}=="Sony Interactive Entertainment Wireless Controller", SYMLINK+="input/event-ps5-gamepad"
 EOF
 
 # Restart the udev rules
