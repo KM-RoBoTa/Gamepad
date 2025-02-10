@@ -43,11 +43,9 @@ PS5::PS5()
 {
     m_stopThread = false;
 
-    // Initialize tables
-    for (int i=0; i<NBR_BUTTONS; i++)
-        m_buttons[i] = 0;
-    for (int i=0; i<NBR_AXES; i++)
-        m_axes[i] = 0; 
+    // Initialize vectors
+    m_buttons = vector<int>(NBR_BUTTONS, 0);
+    m_axes = vector<float>(NBR_AXES, 0);
 
     m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, "/dev/input/event-ps5-gamepad");
 
@@ -64,11 +62,9 @@ PS5::PS5(const char* gamepad_portname)
 {
     m_stopThread = false;
 
-    // Initialize tables
-    for (int i=0; i<NBR_BUTTONS; i++)
-        m_buttons[i] = 0;
-    for (int i=0; i<NBR_AXES; i++)
-        m_axes[i] = 0; 
+    // Initialize vectors
+    m_buttons = vector<int>(NBR_BUTTONS, 0);
+    m_axes = vector<float>(NBR_AXES, 0);
 
     m_ps5_thread = thread(&KMR::gamepads::PS5::gamepadLoop, this, gamepad_portname);
 
@@ -77,16 +73,17 @@ PS5::PS5(const char* gamepad_portname)
 
 
 /**
- * @brief       Class destructor. Takes care of safely stopping the thread
+ * @brief   Class destructor. Takes care of safely stopping the thread
  */
 PS5::~PS5()
 {
     m_stopThread = true;
 
-    cout << "Safely stopping the gamepad's thread.... " << endl;
-
+    // Main thread waits until the PS5 thread finishes
     if (m_ps5_thread.joinable()) 
         m_ps5_thread.join();
+
+    cout << "Gamepad's thread is safely stopped" << endl;
 }
 
 
@@ -98,14 +95,11 @@ PS5::~PS5()
 void PS5::gamepadLoop(const char* gamepad_portname)
 {
     struct libevdev *dev = NULL;
-    int fd = 1;
-    int rc = 1;
     int read_flag = LIBEVDEV_READ_FLAG_NORMAL;
 
-    fd = open(gamepad_portname, O_RDONLY|O_NONBLOCK);
-    m_fd = fd;
+    int fd = open(gamepad_portname, O_RDONLY|O_NONBLOCK);
 
-    rc = libevdev_new_from_fd(m_fd, &dev);
+    int rc = libevdev_new_from_fd(fd, &dev);
     if (rc < 0) {
         fprintf(stderr, "Failed to init libevdev (%s)\n", strerror(-rc));
         exit(1);
@@ -115,7 +109,6 @@ void PS5::gamepadLoop(const char* gamepad_portname)
         libevdev_get_id_bustype(dev),
         libevdev_get_id_vendor(dev),
         libevdev_get_id_product(dev));
-
 
     // Start of loop
     while(!m_stopThread) {
@@ -131,8 +124,9 @@ void PS5::gamepadLoop(const char* gamepad_portname)
         }
 
         this_thread::sleep_for(chrono::milliseconds(1));
-
     }
+
+    close(fd);
 }
 
 /**
@@ -183,5 +177,6 @@ void PS5::updateGamepad(input_event ev)
         else if(strcmp(event_code, "ABS_HAT0Y") == 0) m_buttons[e_ABS_HAT0Y] = -value;
     }
 }
+
 
 }

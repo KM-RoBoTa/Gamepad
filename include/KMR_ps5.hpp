@@ -20,6 +20,8 @@
 #include <mutex>
 #include "libevdev-1.0/libevdev/libevdev.h"
 #include <thread>
+#include <vector>
+#include <unistd.h>
 
 
 namespace KMR::gamepads
@@ -32,37 +34,40 @@ namespace KMR::gamepads
  * @note        Even though HAT0X and HAT0Y are technically axes, they are classified as buttons
  *              given that they can only take 3 possible values {-1, 0, 1}
  */
-enum ps5Buttons {e_BTN_SELECT, e_BTN_START, e_BTN_MODE, 
-                 e_BTN_NORTH, e_BTN_WEST, e_BTN_SOUTH, e_BTN_EAST,
-                 e_BTN_TR, e_BTN_TR2, e_BTN_TL, e_BTN_TL2,
-                 e_BTN_THUMBR, e_BTN_THUMBL,
-                 e_ABS_HAT0X, e_ABS_HAT0Y, 
-                 NBR_BUTTONS, UNDEF_BUTTON};
+enum ps5Buttons {
+    e_BTN_SELECT, e_BTN_START, e_BTN_MODE, 
+    e_BTN_NORTH, e_BTN_WEST, e_BTN_SOUTH, e_BTN_EAST,
+    e_BTN_TR, e_BTN_TR2, e_BTN_TL, e_BTN_TL2,
+    e_BTN_THUMBR, e_BTN_THUMBL,
+    e_ABS_HAT0X, e_ABS_HAT0Y, 
+    NBR_BUTTONS, UNDEF_BUTTONS
+};
 
 /**
- * @brief       Enumerate of all axes present in a PS5
+ * @brief   Enumerate of all axes present in a PS5
  */
-enum ps5Axes{e_ABS_RX, e_ABS_RY, e_ABS_X, e_ABS_Y,
-             e_ABS_Z, e_ABS_RZ,
-             NBR_AXES, UNDEF_AXIS};
+enum ps5Axes{
+    e_ABS_RX, e_ABS_RY, e_ABS_X, e_ABS_Y,
+    e_ABS_Z, e_ABS_RZ,
+    NBR_AXES, UNDEF_AXES
+};
 
 class PS5 {
-    private:
-        int m_fd; // File descriptor
-        bool m_stopThread;
-        std::thread m_ps5_thread;
+public:
+    PS5();
+    PS5(const char* gamepad_portname);
+    ~PS5();
 
-        void updateGamepad(input_event ev);
-        void gamepadLoop(const char* gamepad_portname);
+    std::vector<int> m_buttons;
+    std::vector<float> m_axes;
+    std::mutex m_mutex;
 
-    public:
-        int m_buttons[NBR_BUTTONS];
-        float m_axes[NBR_AXES];
-        std::mutex m_mutex;
+private:
+    bool m_stopThread;
+    std::thread m_ps5_thread;
 
-        PS5();
-        PS5(const char* gamepad_portname);
-        ~PS5();
+    void updateGamepad(input_event ev);
+    void gamepadLoop(const char* gamepad_portname);
 };
 
 }
